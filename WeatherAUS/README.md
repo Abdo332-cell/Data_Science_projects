@@ -1,58 +1,50 @@
 # 🌤️ End-to-End Machine Learning Pipeline: Predicting Rain in Australia
 
-## 📌 Project Overview & Workflow
-This project implements a comprehensive, end-to-end Machine Learning pipeline designed to predict whether it will rain tomorrow in Australia (`RainTomorrow`) using historical meteorological data from the `weatherAUS.csv` dataset.
+## 📌 Project Overview
+This project implements a complete Machine Learning pipeline to predict whether it will rain tomorrow in Australia (`RainTomorrow`) using daily meteorological observations from the `weatherAUS.csv` dataset[cite: 2].
 
-The project follows a structured data science workflow:
-1. **Data Preprocessing & Cleaning**: Handling missing values using domain-specific strategies, dropping `RISK_MM` to prevent data leakage, and encoding binary/categorical variables.
-2. **Exploratory Data Analysis (EDA)**: Visualizing feature distributions, understanding correlations, and identifying class imbalances.
-3. **Feature Engineering & Scaling**: Extracting date features (Year, Month, Day) and normalizing numerical features using `StandardScaler`.
-4. **Model Training & Comparison**: Training and benchmarking multiple ML algorithms including Logistic Regression, K-Nearest Neighbors (KNN), Support Vector Machines (SVM), and Random Forest.
-5. **Evaluation Metrics**: Assessing models using Accuracy, Precision, Recall, and F1-Score.
-
----
-
-## 📁 Dataset Description
-The dataset used in this project is `weatherAUS.csv`, which contains daily weather observations from various locations across Australia.
-
-### Key Features:
-- **Date & Location**: Date of observation and Australian weather station location.
-- **Temperature**: `MinTemp`, `MaxTemp`, `Temp9am`, `Temp3pm` (°C).
-- **Rainfall & Evaporation**: `Rainfall` (mm), `Evaporation` (mm), and `Sunshine` (hours).
-- **Wind**: `WindGustDir`, `WindGustSpeed` (km/h), `WindDir9am`, `WindDir3pm`, `WindSpeed9am`, `WindSpeed3pm`.
-- **Atmospheric Conditions**: `Humidity9am`, `Humidity3pm` (%), `Pressure9am`, `Pressure3pm` (hPa), `Cloud9am`, `Cloud3pm` (oktas).
-- **Targets & Flags**:
-  - `RainToday`: Binary categorical (`Yes` / `No`) indicating if rainfall exceeded 1mm today.
-  - `RainTomorrow` (**Target Variable**): Binary categorical (`Yes` / `No`) indicating if it rained the next day.
-  - `RISK_MM`: Amount of rain on the next day (Dropped during preprocessing to prevent data leakage).
+The main stages of the project include:
+1. **Data Preprocessing & Cleaning**: Handling missing values, dropping `RISK_MM` to prevent data leakage, and encoding categorical variables[cite: 2].
+2. **Exploratory Data Analysis (EDA)**: Analyzing feature relationships, distributions, and target class balance[cite: 2].
+3. **Feature Engineering & Scaling**: Extracting date features (Year, Month, Day) and scaling numerical features via `StandardScaler`[cite: 2].
+4. **Model Training & Comparison**: Benchmarking Logistic Regression, K-Nearest Neighbors (KNN), and Random Forest Classifier[cite: 2].
+5. **Model Evaluation**: Comparing model performance using Accuracy, Precision, Recall, and F1-Score[cite: 2].
 
 ---
 
-## ⚙️ Data Preprocessing & Cleaning
-- **Handling Missing Values**:
-  - **Numerical Features**: Imputed using group-wise median based on `Location` to maintain regional weather patterns. Any remaining nulls were filled using global column medians.
-  - **Categorical Features**: Imputed using the mode (most frequent value) of each respective column.
-- **Data Leakage Prevention**: Dropped `RISK_MM` as it directly reveals the target `RainTomorrow`.
-- **Outlier Handling**: Identified using the Interquartile Range (IQR) method. Outliers were preserved because extreme values represent genuine severe weather events critical for rain prediction.
-- **Feature Engineering**:
-  - Extracted `Year`, `Month`, and `Day` from the `Date` column.
-  - Normalized numerical variables using `StandardScaler`.
-  - Encoded binary/categorical columns (`RainToday`, `Location`, wind directions).
+## 📁 Dataset Features
+The dataset contains historical daily weather metrics from multiple locations across Australia[cite: 2]:
+
+- **Date & Location**: Observation date and station name[cite: 2].
+- **Temperature**: `MinTemp`, `MaxTemp`, `Temp9am`, `Temp3pm` (°C)[cite: 2].
+- **Precipitation & Sunshine**: `Rainfall` (mm), `Evaporation` (mm), `Sunshine` (hours)[cite: 2].
+- **Wind Parameters**: Gust direction/speed, morning/afternoon wind speed and direction[cite: 2].
+- **Atmospheric Metrics**: `Humidity9am`, `Humidity3pm` (%), `Pressure9am`, `Pressure3pm` (hPa), `Cloud9am`, `Cloud3pm` (oktas)[cite: 2].
+- **Target Variable**: `RainTomorrow` (`Yes` / `No`)[cite: 2].
+
+> **Note**: `RISK_MM` was removed during preprocessing because it directly records the rain amount on the following day, which causes data leakage[cite: 2].
 
 ---
 
-## 📊 Models Evaluated
-The following algorithms were trained and evaluated on the preprocessed data:
-- **Logistic Regression** (Baseline linear classifier)
-- **K-Nearest Neighbors (KNN)**
-- **Support Vector Machine (SVM)**
-- **Random Forest Classifier** (Ensemble tree model)
+## ⚙️ Data Preprocessing & Pipeline Steps
+- **Missing Value Imputation**:
+  - **Numerical**: Imputed using group-wise median by `Location` to retain local weather characteristics, followed by overall feature medians[cite: 2].
+  - **Categorical**: Imputed using column modes[cite: 2].
+- **Outlier Handling**: Evaluated using the Interquartile Range (IQR); retained to preserve extreme, real-world meteorological events[cite: 2].
+- **Feature Scaling**: Numerical variables standardized using `StandardScaler`[cite: 2].
 
 ---
 
-## 🚀 How to Run the Project
+## 📊 Evaluation & Machine Learning Models
+The model pipeline tests three distinct classification approaches:
+- **Logistic Regression**: Linear baseline model[cite: 2].
+- **K-Nearest Neighbors (KNN)**: Non-parametric distance-based classifier[cite: 2].
+- **Random Forest Classifier**: Ensemble decision tree model for non-linear decision boundaries[cite: 2].
 
-### 1. Prerequisites
-Ensure you have Python installed along with the required dependencies:
+---
+
+## 🛠️ Requirements & Quick Start
+
+### 1. Requirements
 ```bash
 pip install numpy pandas matplotlib seaborn scikit-learn
