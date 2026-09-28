@@ -49,12 +49,9 @@ ENCODER_FILES = {
     "gender_encoder": "gender_encoder.pkl",
     "scaler": "scaler.pkl",
 }
-
-# Models are loaded automatically from here on startup (no file picking needed).
 APP_DIR = Path(__file__).resolve().parent
 MODEL_DIR_CANDIDATES = [APP_DIR / "model_files", APP_DIR]
 
-# Old single-model file name (the notebook used to save only the SVM).
 LEGACY_MODEL_FILE = "churn_model.pkl"
 RECOMMENDED_KEY = "svm"
 
@@ -68,7 +65,6 @@ class ModelInfo:
     best_for: str
     strengths: tuple[str, ...]
     limitations: tuple[str, ...]
-    # Scores from the notebook (20% stratified hold-out test set).
     accuracy: float
     precision: float
     recall: float
@@ -252,7 +248,6 @@ class ChurnModelBundle:
         )
         model = self._read_model(model_paths[default_key])
 
-        # Commit only after everything loaded successfully.
         self.geo_encoder, self.gender_encoder, self.scaler = geo_encoder, gender_encoder, scaler
         self.model_paths = model_paths
         self._cache = {default_key: model}
@@ -628,7 +623,6 @@ class ChurnIQApp(ctk.CTk):
         )
         self.model_badge.pack(fill="x", padx=14)
  
-        # Fallback only: shown when the models folder cannot be found automatically.
         self.locate_button = ctk.CTkButton(
             sidebar, text="Locate Models Folder", command=self.on_load_model,
             height=39, corner_radius=8, fg_color=Theme.BLUE,
